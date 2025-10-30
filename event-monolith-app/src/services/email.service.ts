@@ -2,9 +2,7 @@ import nodemailer from 'nodemailer'
 
 let transporter: nodemailer.Transporter | null = null
 
-/**
- * Initialize Ethereal transporter for testing
- */
+
 async function initializeTransporter() {
   if (transporter) return transporter
 
@@ -29,9 +27,7 @@ async function initializeTransporter() {
   return transporter
 }
 
-/**
- * Send welcome email to new user
- */
+
 export async function sendWelcomeEmail(email: string, userId: string): Promise<void> {
   const transport = await initializeTransporter()
 
@@ -62,9 +58,7 @@ export async function sendWelcomeEmail(email: string, userId: string): Promise<v
   }
 }
 
-/**
- * Send event approval notification
- */
+
 export async function sendEventApprovalEmail(email: string, eventTitle: string): Promise<void> {
   const transport = await initializeTransporter()
 

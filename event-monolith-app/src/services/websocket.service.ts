@@ -7,25 +7,19 @@ export interface WSMessage {
 class WebSocketService {
   private clients: Set<any> = new Set()
 
-  /**
-   * Register a new WebSocket client
-   */
+
   addClient(ws: any): void {
     this.clients.add(ws)
     console.log(`📡 WebSocket client connected. Total clients: ${this.clients.size}`)
   }
 
-  /**
-   * Remove a WebSocket client
-   */
+  
   removeClient(ws: any): void {
     this.clients.delete(ws)
     console.log(`📡 WebSocket client disconnected. Total clients: ${this.clients.size}`)
   }
 
-  /**
-   * Broadcast a message to all connected clients
-   */
+  
   broadcast(message: WSMessage): void {
     const payload = JSON.stringify(message)
     this.clients.forEach((client) => {
@@ -71,9 +65,7 @@ class WebSocketService {
     })
   }
 
-  /**
-   * Broadcast event approval
-   */
+  
   broadcastEventApproved(event: any): void {
     this.broadcast({
       type: 'EVENT_APPROVED',
@@ -82,9 +74,7 @@ class WebSocketService {
     })
   }
 
-  /**
-   * Broadcast RSVP creation
-   */
+  
   broadcastRsvpCreated(rsvp: any): void {
     this.broadcast({
       type: 'RSVP_CREATED',
@@ -93,9 +83,7 @@ class WebSocketService {
     })
   }
 
-  /**
-   * Broadcast RSVP update
-   */
+  
   broadcastRsvpUpdated(rsvp: any): void {
     this.broadcast({
       type: 'RSVP_UPDATED',
@@ -104,9 +92,7 @@ class WebSocketService {
     })
   }
 
-  /**
-   * Get number of connected clients
-   */
+ 
   getClientCount(): number {
     return this.clients.size
   }
