@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client'
-import { JWTPayload } from '../utils/jwt.utils'
-import { wsService } from '../services/websocket.service'
-import { sendEventApprovalEmail } from '../services/email.service'
+import { JWTPayload } from '../utils/jwt.utils.js'
+import { wsService } from '../services/websocket.service.js'
+import { sendEventApprovalEmail } from '../services/email.service.js'
 
 const prisma = new PrismaClient()
 

@@ -1,12 +1,9 @@
 import { Elysia, t } from 'elysia'
-import { getEventSuggestions, chatWithAssistant } from '../services/ai.service'
-import { JWTPayload } from '../utils/jwt.utils'
+import { getEventSuggestions, chatWithAssistant } from '../services/ai.service.js'
+import { JWTPayload } from '../utils/jwt.utils.js'
 
 export const aiRoutes = new Elysia({ prefix: '/api/ai' })
-  /**
-   * GET /ai/suggestions
-   * Get AI-powered event suggestions based on user history
-   */
+
   .get(
     '/suggestions',
     async ({ set, request }) => {
@@ -18,7 +15,7 @@ export const aiRoutes = new Elysia({ prefix: '/api/ai' })
           return { error: 'Missing token' }
         }
 
-        const { verifyToken } = await import('../utils/jwt.utils')
+        const { verifyToken } = await import('../utils/jwt.utils.js')
         const user = verifyToken(token) as JWTPayload
         if (!user) {
           set.status = 401
@@ -57,7 +54,7 @@ export const aiRoutes = new Elysia({ prefix: '/api/ai' })
           return { error: 'Missing token' }
         }
 
-        const { verifyToken } = await import('../utils/jwt.utils')
+        const { verifyToken } = await import('../utils/jwt.utils.js')
         const user = verifyToken(token) as JWTPayload
         if (!user) {
           set.status = 401

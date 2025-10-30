@@ -1,10 +1,10 @@
 import OpenAI from 'openai'
 import { PrismaClient } from '@prisma/client'
-import { JWTPayload } from '../utils/jwt.utils'
+import { JWTPayload } from '../utils/jwt.utils.js'
 
 const prisma = new PrismaClient()
 
-// Initialize OpenAI client (will use OPENAI_API_KEY env variable)
+
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || 'dummy-key'
 })
@@ -14,9 +14,7 @@ interface ChatMessage {
   content: string
 }
 
-/**
- * Get AI-powered event suggestions based on user's RSVP history
- */
+
 export async function getEventSuggestions(user: JWTPayload) {
   try {
     // Get user's RSVP history
@@ -97,9 +95,7 @@ Please analyze the user's preferences and suggest 3-5 events they would most lik
   }
 }
 
-/**
- * Fallback suggestions when AI is unavailable
- */
+
 async function getFallbackSuggestions(user: JWTPayload) {
   const upcomingEvents = await prisma.event.findMany({
     where: {
@@ -122,9 +118,6 @@ async function getFallbackSuggestions(user: JWTPayload) {
   }
 }
 
-/**
- * AI chat assistant for user queries
- */
 export async function chatWithAssistant(user: JWTPayload, message: string, chatHistory: ChatMessage[] = []) {
   try {
     // Get user context

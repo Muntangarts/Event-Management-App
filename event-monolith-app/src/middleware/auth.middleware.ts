@@ -1,5 +1,5 @@
 import { Context } from 'elysia'
-import { extractTokenFromHeader, verifyToken, JWTPayload } from '../utils/jwt.utils'
+import { extractTokenFromHeader, verifyToken, JWTPayload } from '../utils/jwt.utils.js'
 
 /**
  * Attach user to context if valid JWT is provided

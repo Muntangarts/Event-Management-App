@@ -1,11 +1,8 @@
 import { Elysia, t } from 'elysia'
-import { signup, login, SignupRequest, LoginRequest } from '../controllers/auth.controller'
+import { signup, login, SignupRequest, LoginRequest } from '../controllers/auth.controller.js'
 
 export const authRoutes = new Elysia({ prefix: '/api' })
-    /**
-     * POST /signup
-     * Register a new user
-     */
+   
     .post(
       '/signup',
       async ({ body, set }) => {
@@ -36,10 +33,7 @@ export const authRoutes = new Elysia({ prefix: '/api' })
       }
     )
 
-    /**
-     * POST /login
-     * Authenticate user and return JWT token
-     */
+   
     .post(
       '/login',
       async ({ body, set }) => {

@@ -8,21 +8,18 @@ import {
   approveEvent,
   CreateEventRequest,
   UpdateEventRequest
-} from '../controllers/event.controller'
-import { rsvpEvent, getEventRsvps, getUserRsvps, RsvpRequest } from '../controllers/rsvp.controller'
+} from '../controllers/event.controller.js'
+import { rsvpEvent, getEventRsvps, getUserRsvps, RsvpRequest } from '../controllers/rsvp.controller.js'
 import {
   requireAuth,
   requireOrganizerOrAdmin,
   requireAdmin,
   requireRole
-} from '../middleware/auth.middleware'
-import { JWTPayload } from '../utils/jwt.utils'
+} from '../middleware/auth.middleware.js'
+import { JWTPayload } from '../utils/jwt.utils.js'
 
 export const eventRoutes = new Elysia({ prefix: '/api' })
-    /**
-     * GET /events
-     * Get all approved events (public, but auth required per spec)
-     */
+    
     .get(
       '/events',
       async ({ set }) => {
@@ -60,7 +57,7 @@ export const eventRoutes = new Elysia({ prefix: '/api' })
             return { error: 'Missing token' }
           }
 
-          const { verifyToken } = await import('../utils/jwt.utils')
+          const { verifyToken } = await import('../utils/jwt.utils.js')
           const user = verifyToken(token) as JWTPayload
           if (!user) {
             set.status = 401
@@ -105,7 +102,7 @@ export const eventRoutes = new Elysia({ prefix: '/api' })
           }
 
           // Verify token and extract user
-          const { verifyToken } = await import('../utils/jwt.utils')
+          const { verifyToken } = await import('../utils/jwt.utils.js')
           const user = verifyToken(token) as JWTPayload
           if (!user) {
             set.status = 401
@@ -155,7 +152,7 @@ export const eventRoutes = new Elysia({ prefix: '/api' })
             return { error: 'Missing token' }
           }
 
-          const { verifyToken } = await import('../utils/jwt.utils')
+          const { verifyToken } = await import('../utils/jwt.utils.js')
           const user = verifyToken(token) as JWTPayload
           if (!user) {
             set.status = 401
@@ -207,7 +204,7 @@ export const eventRoutes = new Elysia({ prefix: '/api' })
             return { error: 'Missing token' }
           }
 
-          const { verifyToken } = await import('../utils/jwt.utils')
+          const { verifyToken } = await import('../utils/jwt.utils.js')
           const user = verifyToken(token) as JWTPayload
           if (!user) {
             set.status = 401
@@ -253,7 +250,7 @@ export const eventRoutes = new Elysia({ prefix: '/api' })
             return { error: 'Missing token' }
           }
 
-          const { verifyToken } = await import('../utils/jwt.utils')
+          const { verifyToken } = await import('../utils/jwt.utils.js')
           const user = verifyToken(token) as JWTPayload
           if (!user) {
             set.status = 401
@@ -302,7 +299,7 @@ export const eventRoutes = new Elysia({ prefix: '/api' })
             return { error: 'Missing token' }
           }
 
-          const { verifyToken } = await import('../utils/jwt.utils')
+          const { verifyToken } = await import('../utils/jwt.utils.js')
           const user = verifyToken(token) as JWTPayload
           if (!user) {
             set.status = 401
@@ -349,7 +346,7 @@ export const eventRoutes = new Elysia({ prefix: '/api' })
             return { error: 'Missing token' }
           }
 
-          const { verifyToken } = await import('../utils/jwt.utils')
+          const { verifyToken } = await import('../utils/jwt.utils.js')
           const user = verifyToken(token) as JWTPayload
           if (!user) {
             set.status = 401
@@ -393,7 +390,7 @@ export const eventRoutes = new Elysia({ prefix: '/api' })
             return { error: 'Missing token' }
           }
 
-          const { verifyToken } = await import('../utils/jwt.utils')
+          const { verifyToken } = await import('../utils/jwt.utils.js')
           const user = verifyToken(token) as JWTPayload
           if (!user) {
             set.status = 401

@@ -4,10 +4,10 @@ import { cors } from '@elysiajs/cors'
 import dotenv from 'dotenv'
 import { fileURLToPath } from 'url'
 import { createServer } from 'http'
-import { authRoutes } from './routes/auth.routes'
-import { eventRoutes } from './routes/event.routes'
-import { aiRoutes } from './routes/ai.routes'
-import { wsService } from './services/websocket.service'
+import { authRoutes } from './routes/auth.routes.js'
+import { eventRoutes } from './routes/event.routes.js'
+import { aiRoutes } from './routes/ai.routes.js'
+import { wsService } from './services/websocket.service.js'
 
 dotenv.config()
 const PORT = parseInt(process.env.PORT || '3000', 10)

@@ -1,7 +1,7 @@
 import { PrismaClient, Role } from '@prisma/client'
 import { hash, compare } from 'bcrypt'
-import { signToken, JWTPayload } from '../utils/jwt.utils'
-import { sendWelcomeEmail } from '../services/email.service'
+import { signToken, JWTPayload } from '../utils/jwt.utils.js'
+import { sendWelcomeEmail } from '../services/email.service.js'
 
 const prisma = new PrismaClient()
 
