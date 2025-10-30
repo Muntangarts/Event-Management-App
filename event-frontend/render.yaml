@@ -6,7 +6,7 @@ services:
     staticPublishPath: ./dist
     envVars:
       - key: VITE_API_BASE_URL
-        value: https://your-backend-url.onrender.com/api
+        value: https://event-management-app-16la.onrender.com/api
     routes:
       - type: rewrite
         source: /*
