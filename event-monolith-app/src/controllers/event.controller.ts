@@ -38,6 +38,23 @@ export async function getApprovedEvents() {
 }
 
 /**
+ * Get all events (ADMIN only - includes pending events)
+ */
+export async function getAllEvents() {
+  const events = await prisma.event.findMany({
+    include: {
+      organizer: {
+        select: { id: true, email: true }
+      },
+      rsvps: true
+    },
+    orderBy: { date: 'asc' }
+  })
+
+  return events
+}
+
+/**
  * Create a new event (ORGANIZER only)
  */
 export async function createEvent(data: CreateEventRequest, user: JWTPayload) {

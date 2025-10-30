@@ -1,6 +1,7 @@
 import { Elysia, t } from 'elysia'
 import {
   getApprovedEvents,
+  getAllEvents,
   createEvent,
   updateEvent,
   deleteEvent,
@@ -40,6 +41,50 @@ export const eventRoutes = new Elysia({ prefix: '/api' })
           tags: ['Events'],
           summary: 'Get all approved events',
           description: 'Retrieve all approved events. Requires authentication.'
+        }
+      }
+    )
+
+    /**
+     * GET /events/all
+     * Get all events including pending (ADMIN only)
+     */
+    .get(
+      '/events/all',
+      async ({ set, request }) => {
+        try {
+          const authHeader = request.headers.get('authorization')
+          const token = authHeader?.split(' ')[1]
+          if (!token) {
+            set.status = 401
+            return { error: 'Missing token' }
+          }
+
+          const { verifyToken } = await import('../utils/jwt.utils')
+          const user = verifyToken(token) as JWTPayload
+          if (!user) {
+            set.status = 401
+            return { error: 'Invalid token' }
+          }
+
+          if (user.role !== 'ADMIN') {
+            set.status = 403
+            return { error: 'Only ADMIN can view all events' }
+          }
+
+          const events = await getAllEvents()
+          set.status = 200
+          return events
+        } catch (error: any) {
+          set.status = 500
+          return { error: error.message }
+        }
+      },
+      {
+        detail: {
+          tags: ['Events'],
+          summary: 'Get all events including pending',
+          description: 'Retrieve all events (approved and pending). ADMIN only.'
         }
       }
     )

@@ -47,7 +47,7 @@ function Login({ onLogin }) {
   return (
     <div className="login-container">
       <div className="login-card">
-        <h1>🎉 Event Management</h1>
+        <h1>Event Management</h1>
         
         <div className="tabs">
           <button 

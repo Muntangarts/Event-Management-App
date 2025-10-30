@@ -77,7 +77,7 @@ function EventList({ events, user, token, myRsvps, onEventDeleted, onEventApprov
 
   return (
     <div className="card">
-      <h3>📅 Events</h3>
+      <h3> Events</h3>
       
       {message && (
         <div className={`message ${message.includes('✅') || message.includes('updated') ? 'success' : message.includes('deleted') ? 'info' : 'error'}`}>
@@ -105,9 +105,9 @@ function EventList({ events, user, token, myRsvps, onEventDeleted, onEventApprov
                 </div>
 
                 <div className="event-info">
-                  <p><strong>📝 Description:</strong> {event.description}</p>
-                  <p><strong>📅 Date:</strong> {new Date(event.date).toLocaleString()}</p>
-                  <p><strong>📍 Location:</strong> {event.location}</p>
+                  <p><strong> Description:</strong> {event.description}</p>
+                  <p><strong> Date:</strong> {new Date(event.date).toLocaleString()}</p>
+                  <p><strong> Location:</strong> {event.location}</p>
                   <p><strong>👤 Organizer:</strong> {event.organizer?.email || 'Unknown'}</p>
                 </div>
 
@@ -119,19 +119,19 @@ function EventList({ events, user, token, myRsvps, onEventDeleted, onEventApprov
                         className={`rsvp-btn ${userRsvp?.status === 'GOING' ? 'selected' : ''}`}
                         onClick={() => handleRSVP(event.id, 'GOING')}
                       >
-                        ✓ Going
+                        Going
                       </button>
                       <button
                         className={`rsvp-btn ${userRsvp?.status === 'MAYBE' ? 'selected' : ''}`}
                         onClick={() => handleRSVP(event.id, 'MAYBE')}
                       >
-                        ? Maybe
+                        Maybe
                       </button>
                       <button
                         className={`rsvp-btn ${userRsvp?.status === 'NOT_GOING' ? 'selected' : ''}`}
                         onClick={() => handleRSVP(event.id, 'NOT_GOING')}
                       >
-                        ✗ Not Going
+                        Not Going
                       </button>
                     </div>
                   </div>
@@ -151,7 +151,7 @@ function EventList({ events, user, token, myRsvps, onEventDeleted, onEventApprov
                       className="btn btn-danger"
                       onClick={() => handleDelete(event.id)}
                     >
-                      🗑️ Delete
+                      Delete
                     </button>
                   )}
                 </div>

@@ -50,7 +50,9 @@ function App() {
 
   const loadEvents = async () => {
     try {
-      const response = await fetch(`${API_BASE}/events`, {
+      // Admins fetch ALL events (including pending), others get approved only
+      const endpoint = user?.role === 'ADMIN' ? `${API_BASE}/events/all` : `${API_BASE}/events`;
+      const response = await fetch(endpoint, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (response.ok) {
@@ -100,7 +102,7 @@ function App() {
     <div className="app">
       <header className="app-header">
         <div className="user-info">
-          <h1>🎉 Event Management</h1>
+          <h1>Event Management</h1>
           <p>Welcome, <strong>{user.email}</strong> <span className="badge">{user.role}</span></p>
         </div>
         <div className="header-actions">
