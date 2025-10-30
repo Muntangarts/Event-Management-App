@@ -6,8 +6,10 @@ import CreateEvent from './components/CreateEvent';
 import MyRsvps from './components/MyRsvps';
 import AiAssistant from './components/AiAssistant';
 import useWebSocket from './hooks/useWebSocket';
+import { useState, useEffect } from 'react';
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
+const WS_URL = API_BASE.replace('http://', 'ws://').replace('https://', 'wss://').replace('/api', '/ws');
 
 function App() {
   const [user, setUser] = useState(null);
@@ -16,7 +18,7 @@ function App() {
   const [myRsvps, setMyRsvps] = useState([]);
   
   const { connected, sendMessage } = useWebSocket(
-    user ? 'ws://localhost:3000/ws' : null,
+    user ? WS_URL : null,
     (data) => handleWebSocketMessage(data)
   );
 
