@@ -20,6 +20,7 @@ CREATE TABLE "Event" (
     "description" TEXT NOT NULL,
     "date" TIMESTAMP(3) NOT NULL,
     "location" TEXT NOT NULL,
+    "capacity" INTEGER NOT NULL DEFAULT 100,
     "approved" BOOLEAN NOT NULL DEFAULT false,
     "organizerId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
