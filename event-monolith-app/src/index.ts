@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url'
 import { createServer } from 'http'
 import { authRoutes } from './routes/auth.routes'
 import { eventRoutes } from './routes/event.routes'
+import { aiRoutes } from './routes/ai.routes'
 import { wsService } from './services/websocket.service'
 
 dotenv.config()
@@ -51,6 +52,7 @@ app.ws('/ws', {
 // Register routes
 app.use(authRoutes)
 app.use(eventRoutes)
+app.use(aiRoutes)
 
 // Export for serverless environments
 export default app.fetch

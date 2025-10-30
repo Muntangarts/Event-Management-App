@@ -4,6 +4,7 @@ import Login from './components/Login';
 import EventList from './components/EventList';
 import CreateEvent from './components/CreateEvent';
 import MyRsvps from './components/MyRsvps';
+import AiAssistant from './components/AiAssistant';
 import useWebSocket from './hooks/useWebSocket';
 
 const API_BASE = 'http://localhost:3000/api';
@@ -131,6 +132,8 @@ function App() {
         
         <MyRsvps rsvps={myRsvps} />
       </main>
+
+      <AiAssistant token={token} user={user} />
     </div>
   );
 }
