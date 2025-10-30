@@ -127,7 +127,8 @@ export const eventRoutes = new Elysia({ prefix: '/api' })
           title: t.String(),
           description: t.String(),
           date: t.String(),
-          location: t.String()
+          location: t.String(),
+          capacity: t.Optional(t.Number({ minimum: 1 }))
         }),
         detail: {
           tags: ['Events'],
@@ -179,7 +180,8 @@ export const eventRoutes = new Elysia({ prefix: '/api' })
           title: t.Optional(t.String()),
           description: t.Optional(t.String()),
           date: t.Optional(t.String()),
-          location: t.Optional(t.String())
+          location: t.Optional(t.String()),
+          capacity: t.Optional(t.Number({ minimum: 1 }))
         }),
         detail: {
           tags: ['Events'],

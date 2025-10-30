@@ -30,6 +30,7 @@ model Event {
   description String
   date        DateTime
   location    String
+  capacity    Int      @default(100)
   approved    Boolean  @default(false)
   organizer   User?    @relation(fields: [organizerId], references: [id], onDelete: SetNull)
   organizerId String?

@@ -10,6 +10,7 @@ export interface CreateEventRequest {
   description: string
   date: string
   location: string
+  capacity?: number
 }
 
 export interface UpdateEventRequest {
@@ -17,6 +18,7 @@ export interface UpdateEventRequest {
   description?: string
   date?: string
   location?: string
+  capacity?: number
 }
 
 /**
@@ -80,6 +82,7 @@ export async function createEvent(data: CreateEventRequest, user: JWTPayload) {
       description: data.description,
       date: eventDate,
       location: data.location,
+      capacity: data.capacity || 100,
       organizerId: user.id
     },
     include: {
@@ -135,7 +138,8 @@ export async function updateEvent(
       title: data.title ?? event.title,
       description: data.description ?? event.description,
       date: data.date ? new Date(data.date) : event.date,
-      location: data.location ?? event.location
+      location: data.location ?? event.location,
+      capacity: data.capacity ?? event.capacity
     },
     include: {
       organizer: {
