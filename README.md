@@ -2,8 +2,6 @@
 
 A full-stack event management platform with real-time updates, role-based access control, and AI-powered recommendations.
 
-![Architecture Diagram](finalballdrawio.png)
-
 ## 📋 Table of Contents
 - [Overview](#overview)
 - [Features](#features)
