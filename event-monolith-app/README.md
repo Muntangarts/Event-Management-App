@@ -565,7 +565,6 @@ npx prisma studio --schema=src/prisma/schema.prisma
    - `JWT_SECRET`: Strong random string
    - `ETHEREAL_USER`: Your Ethereal email
    - `ETHEREAL_PASS`: Your Ethereal password
-   - `NODE_ENV`: `production`
 
 4. **Deploy**
    - Render will automatically build and deploy on push to main
@@ -585,7 +584,6 @@ ETHEREAL_PASS="your_ethereal_password"
 
 # Server
 PORT=3000
-NODE_ENV="development"
 ```
 
 ## 🔐 Security Notes

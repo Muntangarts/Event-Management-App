@@ -1,7 +1,7 @@
 import { Elysia, t } from 'elysia'
 import { signup, login, SignupRequest, LoginRequest } from '../controllers/auth.controller'
 
-export const authRoutes = new Elysia()
+export const authRoutes = new Elysia({ prefix: '/api' })
     /**
      * POST /signup
      * Register a new user

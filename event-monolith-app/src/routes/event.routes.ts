@@ -17,7 +17,7 @@ import {
 } from '../middleware/auth.middleware'
 import { JWTPayload } from '../utils/jwt.utils'
 
-export const eventRoutes = new Elysia()
+export const eventRoutes = new Elysia({ prefix: '/api' })
     /**
      * GET /events
      * Get all approved events (public, but auth required per spec)

@@ -22,6 +22,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@elysiajs/cors": "^1.4.0",
     "@elysiajs/node": "^1.4.1",
     "@elysiajs/swagger": "^1.2.0",
     "@prisma/client": "^5.20.0",

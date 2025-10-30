@@ -1,5 +1,6 @@
 import { Elysia } from 'elysia'
 import { swagger } from '@elysiajs/swagger'
+import { cors } from '@elysiajs/cors'
 import dotenv from 'dotenv'
 import { fileURLToPath } from 'url'
 import { createServer } from 'http'
@@ -11,6 +12,12 @@ dotenv.config()
 const PORT = parseInt(process.env.PORT || '3000', 10)
 
 const app = new Elysia()
+  .use(cors({
+    origin: true,
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  }))
   .use(swagger({
     documentation: {
       info: {
