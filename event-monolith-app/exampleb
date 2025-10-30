@@ -1,0 +1,13 @@
+# Database
+DATABASE_URL="postgresql://user:password@localhost:5432/event_db?sslmode=require"
+
+# JWT
+JWT_SECRET="your_super_secret_jwt_key_change_in_production"
+
+# Email (Ethereal for testing)
+ETHEREAL_USER="your_ethereal_email@ethereal.email"
+ETHEREAL_PASS="your_ethereal_password"
+
+# Server
+PORT=3000
+NODE_ENV="development"

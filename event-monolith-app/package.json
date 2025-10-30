@@ -1,0 +1,43 @@
+{
+  "name": "event-monolith-app",
+  "version": "1.0.0",
+  "description": "Event Management API with Elysia, Prisma, JWT, WebSockets, and Ethereal Email",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "dev:node": "NODE_OPTIONS='--loader tsx' node src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "prisma:generate": "prisma generate --schema=src/prisma/schema.prisma",
+    "prisma:migrate": "prisma migrate dev --name init --schema=src/prisma/schema.prisma"
+  },
+  "keywords": [
+    "elysia",
+    "prisma",
+    "jwt",
+    "websocket",
+    "event-management"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@elysiajs/node": "^1.4.1",
+    "@elysiajs/swagger": "^1.2.0",
+    "@prisma/client": "^5.20.0",
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.5",
+    "elysia": "^1.1.13",
+    "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^6.9.15"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/node": "^20.14.14",
+    "@types/nodemailer": "^6.4.15",
+    "prisma": "^5.20.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
+  }
+}

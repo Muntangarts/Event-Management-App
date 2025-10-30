@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: event-monolith-app
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run prisma:generate && npm run prisma:migrate && npm run build
+    startCommand: npm start
+    envVars:
+      - key: DATABASE_URL
+        scope: build,runtime
+        value: postgresql://user:password@your-neon-host/event_db?sslmode=require
+      - key: JWT_SECRET
+        scope: build,runtime
+        value: your_super_secret_jwt_key_change_in_production
+      - key: ETHEREAL_USER
+        scope: build,runtime
+        value: your_ethereal_email@ethereal.email
+      - key: ETHEREAL_PASS
+        scope: build,runtime
+        value: your_ethereal_password
+      - key: PORT
+        scope: build,runtime
+        value: 3000
+      - key: NODE_ENV
+        scope: build,runtime
+        value: production
