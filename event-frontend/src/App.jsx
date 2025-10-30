@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import Login from './components/Login';
 import EventList from './components/EventList';
@@ -6,7 +7,6 @@ import CreateEvent from './components/CreateEvent';
 import MyRsvps from './components/MyRsvps';
 import AiAssistant from './components/AiAssistant';
 import useWebSocket from './hooks/useWebSocket';
-import { useState, useEffect } from 'react';
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
 const WS_URL = API_BASE.replace('http://', 'ws://').replace('https://', 'wss://').replace('/api', '/ws');
