@@ -1,4 +1,4 @@
-import { Elysia, t, Context } from 'elysia'
+import { Elysia, t } from 'elysia'
 import {
   getApprovedEvents,
   createEvent,
@@ -17,8 +17,7 @@ import {
 } from '../middleware/auth.middleware'
 import { JWTPayload } from '../utils/jwt.utils'
 
-export function eventRoutes(app: Elysia) {
-  return app
+export const eventRoutes = new Elysia()
     /**
      * GET /events
      * Get all approved events (public, but auth required per spec)
@@ -372,4 +371,3 @@ export function eventRoutes(app: Elysia) {
         }
       }
     )
-}

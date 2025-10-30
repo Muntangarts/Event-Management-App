@@ -1,8 +1,7 @@
 import { Elysia, t } from 'elysia'
 import { signup, login, SignupRequest, LoginRequest } from '../controllers/auth.controller'
 
-export function authRoutes(app: Elysia) {
-  return app
+export const authRoutes = new Elysia()
     /**
      * POST /signup
      * Register a new user
@@ -21,9 +20,13 @@ export function authRoutes(app: Elysia) {
       },
       {
         body: t.Object({
-          email: t.String({ format: 'email' }),
+          email: t.String(),
           password: t.String({ minLength: 6 }),
-          role: t.Optional(t.Enum({ ADMIN: 'ADMIN', ORGANIZER: 'ORGANIZER', ATTENDEE: 'ATTENDEE' }))
+          role: t.Optional(t.Union([
+            t.Literal('ADMIN'),
+            t.Literal('ORGANIZER'),
+            t.Literal('ATTENDEE')
+          ]))
         }),
         detail: {
           tags: ['Auth'],
@@ -51,7 +54,7 @@ export function authRoutes(app: Elysia) {
       },
       {
         body: t.Object({
-          email: t.String({ format: 'email' }),
+          email: t.String(),
           password: t.String({ minLength: 6 })
         }),
         detail: {
@@ -61,4 +64,3 @@ export function authRoutes(app: Elysia) {
         }
       }
     )
-}
