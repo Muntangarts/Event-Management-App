@@ -4,6 +4,7 @@ import { cors } from '@elysiajs/cors'
 import dotenv from 'dotenv'
 import { fileURLToPath } from 'url'
 import { createServer } from 'http'
+import { WebSocketServer } from 'ws'
 import { authRoutes } from './routes/auth.routes.js'
 import { eventRoutes } from './routes/event.routes.js'
 import { aiRoutes } from './routes/ai.routes.js'
@@ -34,20 +35,6 @@ const app = new Elysia()
     }
   }))
   .get('/health', () => ({ status: 'ok', timestamp: new Date().toISOString() }))
-
-// WebSocket support
-app.ws('/ws', {
-  open(ws) {
-    wsService.addClient(ws)
-    ws.send(JSON.stringify({ type: 'CONNECTED', message: 'Connected to WebSocket' }))
-  },
-  close(ws) {
-    wsService.removeClient(ws)
-  },
-  message(ws, message) {
-    console.log('WebSocket message received:', message)
-  }
-})
 
 // Register routes
 app.use(authRoutes)
@@ -108,16 +95,25 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   
   const server = createServer(handler)
 
-  // Handle WebSocket upgrades
-  server.on('upgrade', (req: any, socket: any, head: any) => {
-    if (req.url === '/ws') {
-      // @ts-ignore - Elysia internal WebSocket handling
-      app._ws?.upgrade(req, socket, head, (ws: any) => {
-        // WebSocket upgrade handled by Elysia
-      })
-    } else {
-      socket.destroy()
-    }
+  // Setup WebSocket Server
+  const wss = new WebSocketServer({ server, path: '/ws' })
+  
+  wss.on('connection', (ws) => {
+    wsService.addClient(ws)
+    ws.send(JSON.stringify({ type: 'CONNECTED', message: 'Connected to WebSocket' }))
+    
+    ws.on('close', () => {
+      wsService.removeClient(ws)
+    })
+    
+    ws.on('message', (message) => {
+      console.log('WebSocket message received:', message.toString())
+    })
+    
+    ws.on('error', (error) => {
+      console.error('WebSocket error:', error)
+      wsService.removeClient(ws)
+    })
   })
 
   server.listen(PORT, () => {

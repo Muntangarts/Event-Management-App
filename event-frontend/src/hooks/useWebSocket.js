@@ -1,9 +1,15 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 
 function useWebSocket(url, onMessage) {
   const [connected, setConnected] = useState(false);
   const wsRef = useRef(null);
   const reconnectTimeoutRef = useRef(null);
+  const onMessageRef = useRef(onMessage);
+  
+  // Keep the onMessage callback up to date without triggering reconnects
+  useEffect(() => {
+    onMessageRef.current = onMessage;
+  }, [onMessage]);
 
   useEffect(() => {
     if (!url) {
@@ -12,6 +18,12 @@ function useWebSocket(url, onMessage) {
     }
 
     const connect = () => {
+      // Prevent multiple connections
+      if (wsRef.current?.readyState === WebSocket.OPEN || 
+          wsRef.current?.readyState === WebSocket.CONNECTING) {
+        return;
+      }
+
       try {
         const ws = new WebSocket(url);
         wsRef.current = ws;
@@ -25,7 +37,7 @@ function useWebSocket(url, onMessage) {
           try {
             const data = JSON.parse(event.data);
             console.log('WebSocket message:', data);
-            onMessage(data);
+            onMessageRef.current(data);
           } catch (error) {
             console.error('Failed to parse WebSocket message:', error);
           }
@@ -34,8 +46,10 @@ function useWebSocket(url, onMessage) {
         ws.onclose = () => {
           console.log('WebSocket disconnected');
           setConnected(false);
-          // Reconnect after 3 seconds
-          reconnectTimeoutRef.current = setTimeout(connect, 3000);
+          // Only reconnect if we still have a URL
+          if (url) {
+            reconnectTimeoutRef.current = setTimeout(connect, 3000);
+          }
         };
 
         ws.onerror = (error) => {
@@ -45,7 +59,9 @@ function useWebSocket(url, onMessage) {
         console.error('Failed to create WebSocket:', error);
         setConnected(false);
         // Reconnect after 5 seconds on error
-        reconnectTimeoutRef.current = setTimeout(connect, 5000);
+        if (url) {
+          reconnectTimeoutRef.current = setTimeout(connect, 5000);
+        }
       }
     };
 
@@ -54,12 +70,14 @@ function useWebSocket(url, onMessage) {
     return () => {
       if (reconnectTimeoutRef.current) {
         clearTimeout(reconnectTimeoutRef.current);
+        reconnectTimeoutRef.current = null;
       }
       if (wsRef.current) {
         wsRef.current.close();
+        wsRef.current = null;
       }
     };
-  }, [url, onMessage]);
+  }, [url]);
 
   const sendMessage = (message) => {
     if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {

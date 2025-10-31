@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import './App.css';
 import Login from './components/Login';
 import EventList from './components/EventList';
@@ -19,6 +19,7 @@ const getWebSocketUrl = () => {
   return 'ws://localhost:3000/ws';
 };
 const WS_URL = getWebSocketUrl();
+console.log('WebSocket URL:', WS_URL);
 
 function App() {
   const [user, setUser] = useState(null);
@@ -26,9 +27,21 @@ function App() {
   const [events, setEvents] = useState([]);
   const [myRsvps, setMyRsvps] = useState([]);
   
+  const handleWebSocketMessage = useCallback((data) => {
+    if (data.type === 'EVENT_CREATED') {
+      setEvents(prev => [data.payload, ...prev]);
+    } else if (data.type === 'EVENT_UPDATED' || data.type === 'EVENT_APPROVED') {
+      setEvents(prev => prev.map(e => e.id === data.payload.id ? data.payload : e));
+    } else if (data.type === 'EVENT_DELETED') {
+      setEvents(prev => prev.filter(e => e.id !== data.payload.id));
+    } else if (data.type === 'RSVP_CREATED' || data.type === 'RSVP_UPDATED') {
+      loadMyRsvps();
+    }
+  }, []);
+  
   const { connected, sendMessage } = useWebSocket(
     user ? WS_URL : null,
-    (data) => handleWebSocketMessage(data)
+    handleWebSocketMessage
   );
 
   useEffect(() => {
@@ -47,18 +60,6 @@ function App() {
       loadMyRsvps();
     }
   }, [user, token]);
-
-  const handleWebSocketMessage = (data) => {
-    if (data.type === 'EVENT_CREATED') {
-      setEvents(prev => [data.payload, ...prev]);
-    } else if (data.type === 'EVENT_UPDATED' || data.type === 'EVENT_APPROVED') {
-      setEvents(prev => prev.map(e => e.id === data.payload.id ? data.payload : e));
-    } else if (data.type === 'EVENT_DELETED') {
-      setEvents(prev => prev.filter(e => e.id !== data.payload.id));
-    } else if (data.type === 'RSVP_CREATED' || data.type === 'RSVP_UPDATED') {
-      loadMyRsvps();
-    }
-  };
 
   const loadEvents = async () => {
     try {
@@ -118,10 +119,12 @@ function App() {
           <p>Welcome, <strong>{user.email}</strong> <span className="badge">{user.role}</span></p>
         </div>
         <div className="header-actions">
-          <div className="ws-status">
-            <span className={`status-dot ${connected ? 'connected' : 'disconnected'}`}></span>
-            <span>{connected ? 'Live' : 'Disconnected'}</span>
-          </div>
+          {WS_URL && (
+            <div className="ws-status">
+              <span className={`status-dot ${connected ? 'connected' : 'disconnected'}`}></span>
+              <span>{connected ? 'Live' : 'Connecting...'}</span>
+            </div>
+          )}
           <button onClick={handleLogout} className="btn btn-secondary">Logout</button>
         </div>
       </header>
