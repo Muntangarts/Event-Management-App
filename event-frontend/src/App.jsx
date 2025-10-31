@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useState, useEffect } from 'react';
 import './App.css';
 import Login from './components/Login';
 import EventList from './components/EventList';
@@ -9,7 +8,17 @@ import AiAssistant from './components/AiAssistant';
 import useWebSocket from './hooks/useWebSocket';
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
-const WS_URL = API_BASE.replace('http://', 'ws://').replace('https://', 'wss://').replace('/api', '/ws');
+// Construct WebSocket URL from API base
+const getWebSocketUrl = () => {
+  const baseUrl = API_BASE.replace('/api', '');
+  if (baseUrl.startsWith('https://')) {
+    return baseUrl.replace('https://', 'wss://') + '/ws';
+  } else if (baseUrl.startsWith('http://')) {
+    return baseUrl.replace('http://', 'ws://') + '/ws';
+  }
+  return 'ws://localhost:3000/ws';
+};
+const WS_URL = getWebSocketUrl();
 
 function App() {
   const [user, setUser] = useState(null);

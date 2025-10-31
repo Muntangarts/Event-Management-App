@@ -6,38 +6,47 @@ function useWebSocket(url, onMessage) {
   const reconnectTimeoutRef = useRef(null);
 
   useEffect(() => {
-    if (!url) return;
+    if (!url) {
+      setConnected(false);
+      return;
+    }
 
     const connect = () => {
-      const ws = new WebSocket(url);
-      wsRef.current = ws;
+      try {
+        const ws = new WebSocket(url);
+        wsRef.current = ws;
 
-      ws.onopen = () => {
-        console.log('WebSocket connected');
-        setConnected(true);
-      };
+        ws.onopen = () => {
+          console.log('WebSocket connected to:', url);
+          setConnected(true);
+        };
 
-      ws.onmessage = (event) => {
-        try {
-          const data = JSON.parse(event.data);
-          console.log('WebSocket message:', data);
-          onMessage(data);
-        } catch (error) {
-          console.error('Failed to parse WebSocket message:', error);
-        }
-      };
+        ws.onmessage = (event) => {
+          try {
+            const data = JSON.parse(event.data);
+            console.log('WebSocket message:', data);
+            onMessage(data);
+          } catch (error) {
+            console.error('Failed to parse WebSocket message:', error);
+          }
+        };
 
-      ws.onclose = () => {
-        console.log('WebSocket disconnected');
+        ws.onclose = () => {
+          console.log('WebSocket disconnected');
+          setConnected(false);
+          // Reconnect after 3 seconds
+          reconnectTimeoutRef.current = setTimeout(connect, 3000);
+        };
+
+        ws.onerror = (error) => {
+          console.error('WebSocket error:', error);
+        };
+      } catch (error) {
+        console.error('Failed to create WebSocket:', error);
         setConnected(false);
-        // Reconnect after 3 seconds
-        reconnectTimeoutRef.current = setTimeout(connect, 3000);
-      };
-
-      ws.onerror = (error) => {
-        console.error('WebSocket error:', error);
-        setConnected(false);
-      };
+        // Reconnect after 5 seconds on error
+        reconnectTimeoutRef.current = setTimeout(connect, 5000);
+      }
     };
 
     connect();
