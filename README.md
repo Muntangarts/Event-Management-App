@@ -429,6 +429,11 @@ For issues or questions:
 
 ---
 
+## Assigment
+1. Robert Muntanga 2420908 BSE year 2 semester 1
+2. Kennedy Chibuye 2420985 BSE year 2 semester 1
+3. Innocent Kabwe 2410109 BSE year 2 semester 2
+
 **Built with ❤️ Mr. Muntanga using modern web technologies**
 
 *For detailed architecture information, see [ARCHITECTURE.md](ARCHITECTURE.md)*  
