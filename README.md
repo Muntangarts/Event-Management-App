@@ -429,7 +429,7 @@ For issues or questions:
 
 ---
 
-**Built with ❤️ using modern web technologies**
+**Built with ❤️ Mr. Muntanga using modern web technologies**
 
 *For detailed architecture information, see [ARCHITECTURE.md](ARCHITECTURE.md)*  
 *For visual system design, see [finalballdrawio.png](finalballdrawio.png)*
