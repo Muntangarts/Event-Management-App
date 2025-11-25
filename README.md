@@ -1,3 +1,8 @@
+## Assigment
+1. Robert Muntanga 2420908 BSE year 2 semester 1
+2. Kennedy Chibuye 2420985 BSE year 2 semester 1
+3. Innocent Kabwe 2410109 BSE year 2 semester 2
+   
 # 🎉 Event Management System
 
 A full-stack event management platform with real-time updates, role-based access control, and AI-powered recommendations.
